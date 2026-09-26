@@ -1,0 +1,40 @@
+name: build-debian
+on: push
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: debian:trixie
+    steps:
+      - name: Install dependencies
+        run: |
+          echo "deb-src http://deb.debian.org/debian trixie main" >> /etc/apt/sources.list
+          apt update --yes
+          apt upgrade --yes
+          apt install --yes meson zathura-dev libmupdf-dev libjbig2dec0-dev libopenjp2-7-dev libgumbo-dev libtesseract-dev libmujs-dev
+
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Build
+        run: |
+          meson build -Dpdf=disabled
+          cd build
+          ninja
+
+      - name: Release
+        uses: softprops/action-gh-release@v3
+        with:
+          name: zathura-pdf-mupdf
+          body: libpdf-mupdf.so built on on Debian Trixie (13)
+          prerelease: false
+          draft: false
+          generate_release_notes: false
+          tag_name: 2026.01.30
+          working_directory: build
+          files: |
+            libpdf-mupdf.so
