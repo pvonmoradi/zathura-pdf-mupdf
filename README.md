@@ -38,3 +38,35 @@ Bugs
 ----
 
 Please report bugs at https://github.com/pwmt/zathura-pdf-mupdf.
+
+
+Debian Trixie (13.7 and older)
+------------------------------
+Here are instructions to use mupdf backend just for EPUB files:
+
+0. For formats other than EPUB, just use the poppler-based packages:
+`sudo apt install zathura zathura-cb zathura-djvu zathura-pdf-poppler zathura-ps`
+1. Download the binary from releases
+2. Create a desktop file: `~/.local/share/applications/org.pwmt.zathura-epub.desktop`
+
+```
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Zathura-mupdf
+Comment=A minimalistic document viewer
+Exec=zathura --plugins-dir=/path/to/dir/of/libpdf-mupdf %U
+Icon=org.pwmt.zathura
+Terminal=false
+NoDisplay=true
+Categories=Office;Viewer;
+MimeType=application/epub+zip;
+```
+
+(the plugin on Releases is built without pdf support)
+
+3. `update-desktop-database ~/.local/share/applications/`, then choose
+   `Zathura-mupdf` for EPUB files on the context menu of your DE file manager
+
+Of course the mupdf backend can also be used exclusively for everything, just
+make sure to invoke zathura with the proper `--plugins-dir`
