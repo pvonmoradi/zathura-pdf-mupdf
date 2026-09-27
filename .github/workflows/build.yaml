@@ -30,7 +30,7 @@ jobs:
         uses: softprops/action-gh-release@v3
         with:
           name: zathura-pdf-mupdf
-          body: libpdf-mupdf.so built on on Debian Trixie (13)
+          body: libpdf-mupdf.so built on Debian Trixie (13)
           prerelease: false
           draft: false
           generate_release_notes: false
